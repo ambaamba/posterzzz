@@ -4,18 +4,16 @@
     <title>Ammo.js softbody cloth demo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <!-- <link type="text/css" rel="stylesheet" href="main.css"> -->
     <style>
-      	
-			body {
-				color: #333;
-                margin: 0%;
-                padding: 0%;
-                width:100vw;
-                height:100vh;
-			}
-		
-        #container{
+        body {
+            color: #333;
+            margin: 0%;
+            padding: 0%;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #container {
             margin: 0;
             padding: 0;
         }
@@ -25,26 +23,22 @@
 <body>
     <div id="container"></div>
 
-    <script src="jsm/libs/ammo.wasm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ammo.js@0.4.2/builds/ammo.wasm.js"></script>
 
-    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@0.6.2/dist/es-module-shims.min.js"></script>
 
     <script type="importmap">
         {
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-	</script>
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.131.2/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.131.2/examples/jsm/"
+            }
+        }
+    </script>
 
     <script type="module">
-
         import * as THREE from 'three';
-
-		//	import Stats from 'three/addons/libs/stats.module.js';
-
-			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
  
 	// Heightfield parameters
@@ -504,6 +498,24 @@ Ammo.destroy(windForce);
 			}
     
 		</script>
+	 <script>
+        function Ammo() {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.onload = () => resolve(window.Ammo);
+                script.onerror = reject;
+                script.src = 'https://cdn.jsdelivr.net/npm/ammo.js@0.4.2/builds/ammo.wasm.js';
+                document.body.appendChild(script);
+            });
+        }
+
+        Ammo().then((AmmoLib) => {
+            Ammo = AmmoLib;
+            init();
+            animate();
+        });
+    </script>
+
 
 </body>
 
